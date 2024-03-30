@@ -1,6 +1,33 @@
-@Restaurants.API_HostAddress = http://localhost:5136
+@host=http://localhost
+@port=5136
+@Restaurants.API_HostAddress = {{host}}:{{port}}
 
-GET {{Restaurants.API_HostAddress}}/weatherforecast/
+GET {{Restaurants.API_HostAddress}}/api/weatherforecast
 Accept: application/json
+
+###
+
+GET {{Restaurants.API_HostAddress}}/api/weatherforecast/2
+Accept: application/json
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/weatherforecast/generate?ResultNumbers=3
+Content-Type: application/json
+
+{
+    "MinimumTemprature":10,
+    "MaximumTemprature":20
+}
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/weatherforecast/generate?ResultNumbers=1
+Content-Type: application/json
+
+{
+    "MinimumTemprature":30,
+    "MaximumTemprature":20
+}
 
 ###
