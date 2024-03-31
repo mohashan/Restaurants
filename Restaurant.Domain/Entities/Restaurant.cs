@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Net.Sockets;
 
-namespace Restaurant.Domain.Entities;
+namespace Restaurants.Domain.Entities;
 
 public class Restaurant
 {
