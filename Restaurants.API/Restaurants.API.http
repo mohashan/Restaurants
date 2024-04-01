@@ -2,32 +2,32 @@
 @port=5136
 @Restaurants.API_HostAddress = {{host}}:{{port}}
 
-GET {{Restaurants.API_HostAddress}}/api/weatherforecast
+GET {{Restaurants.API_HostAddress}}/api/Restaurants
 Accept: application/json
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/weatherforecast/2
+GET {{Restaurants.API_HostAddress}}/api/Restaurants/5
 Accept: application/json
 
 ###
 
-POST {{Restaurants.API_HostAddress}}/api/weatherforecast/generate?ResultNumbers=3
-Content-Type: application/json
-
-{
-    "MinimumTemprature":10,
-    "MaximumTemprature":20
-}
+GET {{Restaurants.API_HostAddress}}/api/Restaurants/3
+Accept: application/json
 
 ###
 
-POST {{Restaurants.API_HostAddress}}/api/weatherforecast/generate?ResultNumbers=1
+POST {{Restaurants.API_HostAddress}}/api/Restaurants
 Content-Type: application/json
 
 {
-    "MinimumTemprature":30,
-    "MaximumTemprature":20
+    "Name":"celo",
+    "Description":"Desc",
+    "Category":"Sonati",
+    "ContactEmail":"Chelo@paz.com",
+    "ContactNumber":"123345456",
+    "City":"asd",
+    "Street":"asdasd",
+    "PostalCode":"1111111111"
 }
-
 ###
