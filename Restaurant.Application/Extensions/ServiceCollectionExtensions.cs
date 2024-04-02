@@ -20,7 +20,7 @@ namespace Restaurants.Application.Extensions
             services.AddAutoMapper(currentAssembly);
             services.AddValidatorsFromAssembly(currentAssembly).AddFluentValidationAutoValidation();
 
-            services.AddScoped<IRestaurantService, RestaurantService>();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(currentAssembly));
         }
     }
 }

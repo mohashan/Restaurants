@@ -1,5 +1,5 @@
-@host=http://localhost
-@port=5136
+@host=https://localhost
+@port=7132
 @Restaurants.API_HostAddress = {{host}}:{{port}}
 
 GET {{Restaurants.API_HostAddress}}/api/Restaurants
@@ -7,12 +7,17 @@ Accept: application/json
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/Restaurants/5
+GET {{Restaurants.API_HostAddress}}/api/Restaurants/6
 Accept: application/json
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/Restaurants/3
+GET {{Restaurants.API_HostAddress}}/api/Restaurants/4
+Accept: application/json
+
+###
+
+DELETE {{Restaurants.API_HostAddress}}/api/Restaurants/3
 Accept: application/json
 
 ###
@@ -23,11 +28,22 @@ Content-Type: application/json
 {
     "Name":"celo",
     "Description":"Desc",
-    "Category":"Sonati",
+    "Category":"Sonnati",
     "ContactEmail":"Chelo@paz.com",
     "ContactNumber":"123345456",
     "City":"asd",
     "Street":"asdasd",
+    "HasDelivery":false,
     "PostalCode":"1111111111"
+}
+###
+
+PATCH {{Restaurants.API_HostAddress}}/api/Restaurants/6
+Content-Type: application/json
+
+{
+    "Name":"celo3",
+    "Description":"Desc3",
+    "HasDelivery":true
 }
 ###
