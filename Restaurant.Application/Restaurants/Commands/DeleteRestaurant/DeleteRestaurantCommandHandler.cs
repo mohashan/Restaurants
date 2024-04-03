@@ -8,7 +8,7 @@ using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
 
-public class DeleteRestaurantCommandHandler(ILogger<CreateRestaurantCommandHandler> logger,
+public class DeleteRestaurantCommandHandler(ILogger<DeleteRestaurantCommandHandler> logger,
     IRestaurantRepository restaurantRepository) : IRequestHandler<DeleteRestaurantCommand>
 {
     public async Task Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)

@@ -7,12 +7,12 @@ Accept: application/json
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/Restaurants/16 
+GET {{Restaurants.API_HostAddress}}/api/restaurants/1/Dishes 
 Accept: application/json
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/Restaurants/4
+GET {{Restaurants.API_HostAddress}}/api/Restaurants/2/dishes/9
 Accept: application/json
 
 ###
@@ -38,6 +38,7 @@ Content-Type: application/json
 }
 ###
 
+
 PATCH {{Restaurants.API_HostAddress}}/api/Restaurants/6
 Content-Type: application/json
 
@@ -47,3 +48,20 @@ Content-Type: application/json
     "HasDelivery":true
 }
 ###
+
+
+DELETE {{Restaurants.API_HostAddress}}/api/Restaurants/9/dishes
+Content-Type: application/json
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/restaurants/2/dishes
+Content-Type: application/json
+
+{
+    "Name":"dish test",
+    "Description":"desc",
+    "Price": 1547000,
+    "RestaurantId":2,
+    "KiloCalories":123
+}
