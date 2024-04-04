@@ -65,3 +65,23 @@ Content-Type: application/json
     "RestaurantId":2,
     "KiloCalories":123
 }
+
+###
+
+POST {{Restaurants.API_HostAddress}}/register
+Content-Type: application/json
+
+{
+    "email":"user@test.com",
+    "password":"Password!1"
+}
+
+###
+
+POST {{Restaurants.API_HostAddress}}/login
+Content-Type: application/json
+
+{
+    "email":"user@test.com",
+    "password":"Password!1"
+}
