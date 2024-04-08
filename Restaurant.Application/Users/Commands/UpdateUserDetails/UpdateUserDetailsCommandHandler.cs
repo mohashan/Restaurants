@@ -4,14 +4,7 @@ using Microsoft.Extensions.Logging;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
 
-namespace Restaurants.Application.Users.Commands;
-
-public class UpdateUserDetailsCommand : IRequest
-{
-    public DateOnly? DateOfBirth { get; set; }
-    public string? Nationality { get; set; }
-}
-
+namespace Restaurants.Application.Users.Commands.UpdateUserDetails;
 
 public class UpdateUserDetailsCommandHandler(ILogger<UpdateUserDetailsCommandHandler> logger,
     IUserContext userContext,
@@ -24,9 +17,9 @@ public class UpdateUserDetailsCommandHandler(ILogger<UpdateUserDetailsCommandHan
 
         var user = userContext.GetCurrentUser();
 
-        var dbUser = await userStore.FindByIdAsync(user.Id,cancellationToken);
+        var dbUser = await userStore.FindByIdAsync(user.Id, cancellationToken);
 
-        if(dbUser == null)
+        if (dbUser == null)
         {
             throw new NotFoundException<User>(user.Id.ToString());
         }
