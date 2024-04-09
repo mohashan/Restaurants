@@ -5,6 +5,7 @@ using Restaurants.Application.Users.Commands.AssignUserRole;
 using Restaurants.Application.Users.Commands.RemoveUserRole;
 using Restaurants.Application.Users.Commands.UpdateUserDetails;
 using Restaurants.Domain.Constants;
+using Restaurants.Infrastructure.Authorization;
 
 namespace Restaurants.API.Controllers;
 [ApiController]
@@ -12,7 +13,7 @@ namespace Restaurants.API.Controllers;
 public class IdentityController(IMediator mediator):ControllerBase
 {
     [HttpPatch]
-    [Authorize]
+    [Authorize(Policy = PolicyNames.HasNationality)]
     public async Task<IActionResult> UpdateUserDetails(UpdateUserDetailsCommand command)
     {
         await mediator.Send(command);

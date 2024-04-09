@@ -14,10 +14,10 @@ public class RestaurantsUserClaimsPrincipalFactory(UserManager<User> userManager
         var claims = await GenerateClaimsAsync(user);
 
         if(user.Nationality is not null)
-            claims.AddClaim(new Claim("Nationality",user.Nationality));
+            claims.AddClaim(new Claim(AppClaimTypes.Nationality,user.Nationality));
 
         if (user.DateOfBirth is not null)
-            claims.AddClaim(new Claim("DateOfBirth", user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
+            claims.AddClaim(new Claim(AppClaimTypes.DateOfBirth, user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
 
         return new ClaimsPrincipal(claims);
     }
