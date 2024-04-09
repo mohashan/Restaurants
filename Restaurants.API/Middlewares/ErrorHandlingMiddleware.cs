@@ -11,7 +11,13 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
 		{
 			await next.Invoke(context);
 		}
-		catch (NotFoundException ex)
+		catch(ForbidException ex)
+		{
+			logger.LogWarning(ex,ex.Message);
+			context.Response.StatusCode = 403;
+            await context.Response.WriteAsync(ex.Message);
+        }
+        catch (NotFoundException ex)
 		{
             logger.LogWarning(ex, ex.Message);
 

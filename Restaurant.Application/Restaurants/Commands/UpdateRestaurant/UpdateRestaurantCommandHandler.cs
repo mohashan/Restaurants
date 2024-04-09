@@ -4,12 +4,14 @@ using Microsoft.Extensions.Logging;
 using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
+using Restaurants.Domain.Interfaces;
 using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 
 public class UpdateRestaurantCommandHandler(ILogger<UpdateRestaurantCommandHandler> logger,
     IMapper mapper,
+    IRestaurantAuthorizationService restaurantAuthorizationService,
     IRestaurantRepository restaurantRepository) : IRequestHandler<UpdateRestaurantCommand>
 {
     public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
@@ -20,12 +22,10 @@ public class UpdateRestaurantCommandHandler(ILogger<UpdateRestaurantCommandHandl
         logger.LogInformation("Updating Restaurant {@Restaurant}",request);
         var restaurant = await restaurantRepository.GetByIdAsync(request.Id)
             ?? throw new NotFoundException<Restaurant>(request.Id.ToString());
-
         mapper.Map(request, restaurant);
 
-        //restaurant.Name = request.Name;
-        //restaurant.Description = request.Description;
-        //restaurant.HasDelivery = request.HasDelivery;
+        if (!restaurantAuthorizationService.Authorize(restaurant, Domain.Constants.ResourceOperation.Update))
+            throw new ForbidException<Restaurant>(restaurant.Id.ToString());
 
         await restaurantRepository.SaveChangesAsync();
     }
