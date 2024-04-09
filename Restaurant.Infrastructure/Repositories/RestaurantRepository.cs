@@ -26,6 +26,12 @@ internal class RestaurantRepository(RestaurantsDbContext dbContext) : IRestauran
         return results;
     }
 
+    public async Task<IEnumerable<Restaurant>> GetAllByOwnerIdAsync(string OwnerId)
+    {
+        var restaurants = await dbContext.Restaurants.Where(c => c.OwnerId == OwnerId).ToListAsync();
+        return restaurants;
+    }
+
     public async Task<Restaurant?> GetByIdAsync(int Id)
     {
         var result = await dbContext.Restaurants

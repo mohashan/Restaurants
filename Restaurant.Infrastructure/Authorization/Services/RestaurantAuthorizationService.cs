@@ -3,6 +3,8 @@ using Restaurants.Application.Users;
 using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Interfaces;
+using Restaurants.Domain.Repositories;
+using Restaurants.Infrastructure.Persistence;
 
 namespace Restaurants.Infrastructure.Authorization.Services;
 
@@ -13,7 +15,7 @@ public class RestaurantAuthorizationService(ILogger<RestaurantAuthorizationServi
     {
         var user = userContext.GetCurrentUser();
         logger.LogInformation("Authorizing user {UserEmail}, to {Operation} for {Restaurant}",
-            user.Email,
+            user!.Email,
             resourceOperation,
             restaurant.Name);
 

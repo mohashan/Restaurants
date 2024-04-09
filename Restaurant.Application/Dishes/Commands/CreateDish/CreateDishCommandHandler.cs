@@ -17,6 +17,7 @@ public class CreateDishCommandHandler(IDishRepository dishRepository,
 {
     public async Task<int> Handle(CreateDishCommand request, CancellationToken cancellationToken)
     {
+        logger.LogInformation("Creating dish : {@request}", request);
         var restaurant = await restaurantRepository.GetByIdAsync(request.RestaurantId)
             ?? throw new NotFoundException<Restaurant>(request.RestaurantId.ToString());
 

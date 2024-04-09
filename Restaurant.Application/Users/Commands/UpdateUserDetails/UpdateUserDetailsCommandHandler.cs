@@ -17,7 +17,7 @@ public class UpdateUserDetailsCommandHandler(ILogger<UpdateUserDetailsCommandHan
 
         var user = userContext.GetCurrentUser();
 
-        var dbUser = await userStore.FindByIdAsync(user.Id, cancellationToken);
+        var dbUser = await userStore.FindByIdAsync(user!.Id, cancellationToken);
 
         if (dbUser == null)
         {
