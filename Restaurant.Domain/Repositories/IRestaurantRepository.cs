@@ -4,7 +4,7 @@ namespace Restaurants.Domain.Repositories;
 
 public interface IRestaurantRepository
 {
-    Task<IEnumerable<Restaurant>> GetAllAsync();
+    Task<(IEnumerable<Restaurant>,int)> GetAllAsync(string? searchPhrase,int pageSize,int pageNumber);
     Task<IEnumerable<Restaurant>> GetAllByOwnerIdAsync(string OwnerId);
     Task<Restaurant?> GetByIdAsync(int Id);
 

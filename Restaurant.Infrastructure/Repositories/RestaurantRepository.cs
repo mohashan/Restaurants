@@ -20,10 +20,19 @@ internal class RestaurantRepository(RestaurantsDbContext dbContext) : IRestauran
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Restaurant>> GetAllAsync()
+    public async Task<(IEnumerable<Restaurant>,int)> GetAllAsync(string? searchPhrase, int pageSize, int pageNumber)
     {
-        var results = await dbContext.Restaurants.AsNoTracking().ToListAsync();
-        return results;
+        var lowerSearchPhrase = searchPhrase?.ToLower();
+        var baseResult = dbContext.Restaurants.
+            Where(c => searchPhrase == null || (c.Name.ToLower().Contains(lowerSearchPhrase) || c.Description.ToLower().Contains(lowerSearchPhrase)));
+        var ItemCount = await baseResult.CountAsync();
+        
+        var result = await baseResult.
+            AsNoTracking().
+            Skip((pageNumber - 1) * pageSize).
+            Take(pageSize).
+            ToListAsync();
+        return (result, ItemCount);
     }
 
     public async Task<IEnumerable<Restaurant>> GetAllByOwnerIdAsync(string OwnerId)
