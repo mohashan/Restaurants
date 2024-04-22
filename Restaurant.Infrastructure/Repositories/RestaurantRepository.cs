@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
 using Restaurants.Infrastructure.Persistence;
+using System.Linq.Expressions;
 
 namespace Restaurants.Infrastructure.Repositories;
 
@@ -20,13 +22,33 @@ internal class RestaurantRepository(RestaurantsDbContext dbContext) : IRestauran
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<(IEnumerable<Restaurant>,int)> GetAllAsync(string? searchPhrase, int pageSize, int pageNumber)
+    public async Task<(IEnumerable<Restaurant>,int)> GetAllAsync(string? searchPhrase, int pageSize, int pageNumber,string? sortBy, SortDirection sortDirection)
     {
         var lowerSearchPhrase = searchPhrase?.ToLower();
         var baseResult = dbContext.Restaurants.
             Where(c => searchPhrase == null || (c.Name.ToLower().Contains(lowerSearchPhrase) || c.Description.ToLower().Contains(lowerSearchPhrase)));
         var ItemCount = await baseResult.CountAsync();
         
+        if(sortBy != null)
+        {
+            var columnsSelector = new Dictionary<string, Expression<Func<Restaurant, object>>>
+            {
+                {nameof(Restaurant.Name), x => x.Name},
+                {nameof(Restaurant.Category), x => x.Category}
+            };
+
+            var selectedColumn = columnsSelector[sortBy];
+            if (sortDirection == SortDirection.Descending)
+            {
+                baseResult = baseResult.OrderByDescending(selectedColumn);
+            }
+            else
+            {
+                baseResult = baseResult.OrderBy(selectedColumn);
+            }
+
+        }
+
         var result = await baseResult.
             AsNoTracking().
             Skip((pageNumber - 1) * pageSize).

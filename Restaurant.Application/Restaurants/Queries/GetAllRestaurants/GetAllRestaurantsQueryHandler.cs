@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Restaurants.Application.Common;
+using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Domain.Repositories;
 
@@ -14,11 +15,19 @@ public class GetAllRestaurantsQueryHandler(ILogger<GetAllRestaurantsQueryHandler
     public async Task<PageResult<RestaurantDto>> Handle(GetAllRestaurantsQuery request, CancellationToken cancellationToken)
     {
         logger.LogInformation("Get All Restaurants");
-        var (restaurants,itemCount) = await restaurantRepository.GetAllAsync(request.SearchPhrase,request.PageSize,request.PageNumber);
+        var (restaurants,itemCount) = await restaurantRepository.GetAllAsync(request.SearchPhrase,
+            request.PageSize,
+            request.PageNumber,
+            request.SortBy,
+            request.SortDirection);
         
         var restaurantDto = mapper.Map<List<RestaurantDto>>(restaurants);
 
-        var result = new PageResult<RestaurantDto>(restaurantDto,itemCount,request.PageSize,request.PageNumber);
+        var result = new PageResult<RestaurantDto>(restaurantDto,
+            itemCount,
+            request.PageSize,
+            request.PageNumber);
         return result;
     }
 }
+
