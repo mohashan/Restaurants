@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FluentAssert;
+using FluentAssertions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -16,7 +16,7 @@ public class CreatedMultipleRestaurantRequirementsHandlerTests
 {
     private Mock<ILogger<CreatedMultipleRestaurantRequirementsHandler>> loggerMock;
     private Mock<IRestaurantRepository> restaurantRepositoryMock;
-    private CreatedMultipleRestaurantRequirementsHandler handler;
+    private CreatedMultipleRestaurantRequirementsHandler? handler;
     private Mock<IUserContext> userContextMock;
     public CreatedMultipleRestaurantRequirementsHandlerTests()
     {
@@ -51,7 +51,7 @@ public class CreatedMultipleRestaurantRequirementsHandlerTests
         restaurantRepositoryMock.Setup(c=>c.GetAllByOwnerIdAsync(userId)).ReturnsAsync(restaurants);
 
         var requirement = new CreatedMultipleRestaurantRequirement(2);
-        var context = new AuthorizationHandlerContext([requirement],null,null);
+        var context = new AuthorizationHandlerContext([requirement],null!,null);
 
         // Act
         handler = new CreatedMultipleRestaurantRequirementsHandler(loggerMock.Object, restaurantRepositoryMock.Object, userContextMock.Object);
@@ -78,12 +78,16 @@ public class CreatedMultipleRestaurantRequirementsHandlerTests
             new()
             {
                 OwnerId = userId
+            },
+            new()
+            {
+                OwnerId = userId
             }
         };
 
         restaurantRepositoryMock.Setup(c => c.GetAllByOwnerIdAsync(userId)).ReturnsAsync(restaurants);
 
-        var requirement = new CreatedMultipleRestaurantRequirement(2);
+        var requirement = new CreatedMultipleRestaurantRequirement(3);
         var context = new AuthorizationHandlerContext([requirement], null, null);
 
         // Act
@@ -92,6 +96,6 @@ public class CreatedMultipleRestaurantRequirementsHandlerTests
         await handler.HandleAsync(context);
 
         // Assert
-        context.HasFailed.ShouldBeTrue();
+        context.HasFailed.Should().BeTrue();
     }
 }

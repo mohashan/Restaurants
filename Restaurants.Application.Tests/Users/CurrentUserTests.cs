@@ -15,7 +15,7 @@ namespace Restaurants.Application.Users.Tests
             var user = new CurrentUser("1", "test@test.com", [UserRoles.Admin, UserRoles.User], null, null);
 
             // Act
-            var isInRole = user.IsInRole(UserRoles.Admin.ToLower());
+            var isInRole = user.IsInRole(roleName.ToLower());
 
             // Assert
             isInRole.Should().BeFalse();

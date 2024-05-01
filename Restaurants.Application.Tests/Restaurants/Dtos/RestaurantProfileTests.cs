@@ -87,9 +87,9 @@ public class RestaurantProfileTests
         restaurant.Category.Should().Be(restaurantCommand.Category);
         restaurant.HasDelivery.Should().Be(restaurantCommand.HasDelivery);
         restaurant.Address.Should().NotBeNull();
-        restaurant.Address.City.Should().Be(restaurantCommand.City);
-        restaurant.Address.Street.Should().Be(restaurantCommand.Street);
-        restaurant.Address.PostalCode.Should().Be(restaurantCommand.PostalCode);
+        restaurant.Address?.City.Should().Be(restaurantCommand.City);
+        restaurant.Address?.Street.Should().Be(restaurantCommand.Street);
+        restaurant.Address?.PostalCode.Should().Be(restaurantCommand.PostalCode);
         restaurant.ContactNumber.Should().Be(restaurantCommand.ContactNumber);
         restaurant.ContactEmail.Should().Be(restaurantCommand.ContactEmail);
     }
