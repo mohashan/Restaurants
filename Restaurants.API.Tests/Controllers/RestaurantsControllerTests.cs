@@ -27,4 +27,30 @@ public class RestaurantsControllerTests:IClassFixture<WebApplicationFactory<Prog
         // Assert
         result.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
     }
+
+    [Fact()]
+    public async void GetAll_ForInvalidPageSize_Returns400BadRequest()
+    {
+        // Arrange
+        var client = _factory.CreateClient();
+
+        // Act
+        var result = await client.GetAsync("/api/Restaurants?PageSize=2");
+
+        // Assert
+        result.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+    }
+
+    [Fact()]
+    public async void GetAll_ForInvalidPageNumber_Returns400BadRequest()
+    {
+        // Arrange
+        var client = _factory.CreateClient();
+
+        // Act
+        var result = await client.GetAsync("/api/Restaurants?PageNumber=-1");
+
+        // Assert
+        result.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+    }
 }
