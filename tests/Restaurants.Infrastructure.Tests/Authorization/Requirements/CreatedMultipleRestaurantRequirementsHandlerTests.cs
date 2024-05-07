@@ -59,7 +59,7 @@ public class CreatedMultipleRestaurantRequirementsHandlerTests
         await handler.HandleAsync(context);
 
         // Assert
-        context.HasSucceeded.ShouldBeTrue();
+        context.HasSucceeded.Should().BeTrue();
     }
 
     [Fact()]
